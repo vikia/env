@@ -1,0 +1,37 @@
+#!/usr/bin/expect
+# 跳板机地址
+set rexxx_host [lindex $argv 0]
+# 跳板机用户名
+set username [lindex $argv 1]
+# 跳板机Pin码
+set PIN [lindex $argv 2]
+# 开发机username
+set dev_username [lindex $argv 3]
+# 开发机host
+set dev_host [lindex $argv 4]
+# 开发机密码
+set dev_password [lindex $argv 5]
+# login rexxx host
+# luit 自动转换为gbk
+spawn luit -encoding gbk ssh -l $username $rexxx_host
+expect {
+    "yes/no" {send "yes\r";exp_continue;}
+    "password:" {
+        send_user "token: "
+        # 捕获输入
+        expect_user -timeout 60 -re "(.*)\n"
+        # 正则匹配输入的动态Pin码
+        set token $expect_out(1,string)
+        send "$PIN$token\r"
+        exp_continue
+    }
+    -- "-bash-xxxxx-ssl" {}
+}
+# 登录开发机
+send "ssh -l $dev_username $dev_host\r"
+expect {
+    "yes/no" {send "yes\r";exp_continue;}
+    "password:" {send "$dev_password\r"}
+    "successfully logined" {}
+}
+interact
