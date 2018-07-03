@@ -1,0 +1,264 @@
+" Configuration file for vim
+set modelines=0		" CVE-2007-2438
+
+" Normally we use vim-extensions. If you want true vi-compatibility
+" remove change the following statements
+set nocompatible	" Use Vim defaults instead of 100% vi compatibility
+set backspace=2		" more powerful backspacing
+
+" Don't write backup file if vim is being called by "crontab -e"
+au BufWrite /private/tmp/crontab.* set nowritebackup
+" Don't write backup file if vim is being called by "chpass"
+au BufWrite /private/etc/pw.* set nowritebackup
+"set nu
+"syntax on
+"set ts=4
+"set expandtab
+"set shiftwidth=4
+"set softtabstop=4
+"set smartindent
+"set autoindent
+"set hlsearch
+"set incsearch
+"set showmatch
+"filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+ 
+ " let Vundle manage Vundle
+ " required!
+ Bundle 'gmarik/vundle'
+  
+  " My Bundles here:
+  "
+  " original repos on github
+  Bundle 'neocomplcache'
+  Plugin 'Shougo/neosnippet'
+  Plugin 'Shougo/neosnippet-snippets'
+  Bundle 'tpope/vim-fugitive'
+  Bundle 'Lokaltog/vim-easymotion'
+  Bundle 'Valloric/YouCompleteMe'
+  Bundle 'Lokaltog/vim-powerline'
+  Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+  Bundle 'tpope/vim-rails.git'
+  " vim-scripts repos
+  Bundle 'L9'
+  Bundle 'FuzzyFinder'
+  " non github repos
+  Bundle 'git://git.wincent.com/command-t.git'
+  Bundle 'davidhalter/jedi'
+  Bundle 'fatih/vim-go'
+  Bundle 'elzr/vim-json'
+  " ...
+   
+   filetype plugin indent on     " required!
+   "
+   " Brief help  -- 此处后面都是vundle的使用命令
+   " :BundleList          - list configured bundles
+   " :BundleInstall(!)    - install(update) bundles
+   " :BundleSearch(!) foo - search(or refresh cache first) for foo
+   " :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+   "
+   " see :h vundle for more details or wiki for FAQ
+   " NOTE: comments after Bundle command are not allowed..
+
+"powerline
+set laststatus=2
+let g:Powerline_symbols='unicode'
+set t_Co=256
+
+"common settings
+    syntax enable
+    syntax on
+    filetype plugin indent on
+
+    set t_Co=256
+    "colorscheme torte
+    "colorscheme molokai
+    set cursorline
+    hi CursorLine term=underline cterm=underline
+    set fileencodings=euc-cn,utf-8,cp936,latin1,gb18030
+    set encoding=utf-8
+    "set encoding=utf-8
+    set termencoding=utf-8
+    set fileencoding=utf-8
+    au FileType xhtml,html,css,javascript,php setl fileencoding=utf-8
+    au FileType xhtml,html,css,javascript,php setl encoding=utf-8
+    "set guifont=Luxi\ Mono\12       " set font
+    set tabstop=4                    " set tab width
+    set shiftwidth=4
+    set expandtab
+    set smarttab
+    set autoindent
+    set smartindent
+    "set matchpairs=(:),{:},[:],<:>
+    set showmatch                    " auto match, eg. ()
+    set showcmd
+    set vb t_vb=                    " don't make noise 
+    set backspace=2                    " enable Backspace
+    set backspace=indent,eol,start    " allow backspacing over everything in insert mode
+    set whichwrap=b,s,<,>,[,]
+    set linebreak
+    set history=100     " set how many lines of history VIM has to remeber
+    set autoread        " set to auto read when a file is changed from the outside
+    set number
+    set noswapfile
+    set hidden
+    set scrolloff=2
+    set listchars=tab:>-,trail:-,nbsp:%,eol:$
+    set textwidth=100
+    " highlight column after 'textwidth'
+    set colorcolumn=+1
+    set wildignore=*.o,*.obj,*.bak,*~,*.exe
+
+    "----- about search and replace
+    "set ignorecase
+    set smartcase
+    set incsearch
+    set hlsearch
+
+    "----- fold
+    "set foldmethod=syntax
+    set foldmethod=indent
+    set foldlevel=100
+
+    set nocompatible
+    set laststatus=2
+    "set guifont=PowerlineSymbols\ for\ Powerline
+    "let g:Powerline_symbols = 'fancy'
+
+    set mouse=
+    "map <F4> ms:call AddAuthor()<cr>'s
+
+    "mappings
+    "----- shortcuts about split
+    nnoremap wv <C-w>v
+    nnoremap wc <C-w>c
+    nnoremap ws <C-w>s
+    "----- shortcuts about move among windows
+    noremap <C-H> <C-W>h
+    noremap <C-J> <C-W>j
+    noremap <C-K> <C-W>k
+    noremap <C-L> <C-W>l
+
+    "----- netrw
+    let g:netrw_winsize=30
+    nnoremap <silent> <leader>fe :Sexplore!<CR>
+
+    "----- about vimrc
+    nnoremap <silent><leader>sr :source ~/.vimrc<cr>
+    nnoremap <silent><leader>er :e ~/.vimrc<cr>
+    autocmd! bufwritepost .vimrc source ~/.vimrc
+
+    "----- autoclose '{' and indent
+    inoremap {{ {<CR>}<Esc>ko
+
+    "----- turn hlsearch off/on with CTRL-N
+    nnoremap <silent> <C-N> :se invhlsearch<CR>
+
+  " nerdtree settings
+  Bundle 'scrooloose/nerdtree'
+  let g:NERDChristmasTree = 1                                                                         
+  let g:NERDTreeDirArrows = 0                                                                         
+  let g:NERDTreeShowBookmarks = 1                                                                     
+  let g:NERDTreeShowHidden = 1                                                                        
+  let g:NERDTreeShowLineNumbers=1                                                                     
+  let g:NERDTreeWinSize = 40                                                                          
+  let g:NERDTreeIgnore = ['\.svn$', '\~$', '\.o$', ]                                                  
+  nnoremap <silent> <F9> :NERDTreeToggle<CR>                                                          
+
+  " open a NERDTree automatically when vim starts up if no files
+  " were specified                       
+  autocmd vimenter * if !argc() | NERDTree | endif                                                    
+
+  " close vim if the only window left open is a NERDTree                                              
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+
+  " tagbar settings
+  Bundle 'majutsushi/tagbar'
+  let g:tagbar_width = 40                                                                          
+  nnoremap <silent> <F10> :TagbarToggle<CR>
+
+  " ack settings
+  Bundle 'mileszs/ack.vim'
+  let g:ackprg="ack -w -s --nocolor --nogroup --column --ignore-dir=output"
+  nnoremap <silent> <F3> :Ack <C-R>=expand("<cword>")<CR><CR>
+
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+    \ }
+
+"let g:rehash256 = 1
+"let g:molokai_original = 1
+
+" go settings
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_fmt_command = "goimports"
+
+"go def
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+
+"go doc
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+
+"go info
+au FileType go nmap <Leader>i <Plug>(go-info)
+
+"go rename 
+au FileType go nmap <Leader>e <Plug>(go-rename)
+
+"for neosnippet Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-go/gosnippets/snippets'
+let g:neosnippet#enable_snipmate_compatibility = 1
+
+" SuperTab like snippets behavior.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+      set conceallevel=2 concealcursor=niv
+  endif
